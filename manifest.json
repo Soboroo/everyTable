@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": ["https://everytime.kr/timetable*"],
-      "js": ["content.js"],
+      "js": ["jquery-3.6.0.min.js", "content.js"],
       "run_at": "document_idle"
     }
   ]
