@@ -16,12 +16,5 @@
       "js": ["content.js"],
       "run_at": "document_idle"
     }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["script.js"],
-      "matches": ["<all_urls>"],
-      "run_at": "document_idle"
-    }
   ]
 }
