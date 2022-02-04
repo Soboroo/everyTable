@@ -1,28 +1,4 @@
 $().ready(function () {
-  // common.js
-  //----------------------
-  $(".modal")
-    .bind("beforeShow", function (event) {
-      if (event.target !== this) return false;
-      var $modal = $(this);
-      var $modalwrap = $("<div></div>").addClass("modalwrap");
-      if ($modal.hasClass("popup")) $modalwrap.addClass("lighter");
-      $modalwrap.insertBefore($modal);
-      $modal.css({
-        "margin-left": -($modal.outerWidth() / 2),
-        "margin-top": -($modal.outerHeight() / 2),
-      });
-    })
-    .bind("afterHide", function (event) {
-      if (event.target !== this) return false;
-      var $modal = $(this);
-      $("div.modalwrap").remove();
-    });
-  $(document).on("click", "div.modalwrap", function (event) {
-    $(".modal:visible").hide();
-  });
-  //----------------------
-
   createForm("iCal", "tableCustom", "Export").appendTo("#container");
   $("tableCustom").removeAttr("style");
 
@@ -30,9 +6,21 @@ $().ready(function () {
     "#container > aside > div.title > ol"
   );
   $('[data-modal="tableCustom"]').on("click", () => {
+    var $modal = $("#tableCustom");
+    var $modalwrap = $("<div></div>").addClass("modalwrap");
+    $modalwrap.on("click", function () {
+      $("div.modalwrap").remove();
+      $("#tableCustom").hide();
+    });
+    $modalwrap.insertBefore($modal);
+    $modal.css({
+      "margin-left": -($modal.outerWidth() / 2),
+      "margin-top": -($modal.outerHeight() / 2),
+    });
     $("#tableCustom").show();
   });
   $("a.close", "#tableCustom").on("click", function () {
+    $("div.modalwrap").remove();
     $("#tableCustom").hide();
   });
 
