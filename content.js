@@ -42,13 +42,15 @@ $().ready(function () {
     $closeButton.click(() => {
       $("#" + id).hide();
     });
+    const $content = $("<p>");
 
     $form.append($closeButton);
     $form.append($header);
+    $form.append($content);
 
     if (submitButtonText !== null) {
       const $submitButton = $("<input>")
-        .attr("type", "submit")
+        .attr("type", "button")
         .val(submitButtonText)
         .addClass("button");
       $submitButton.click(handler);
@@ -69,12 +71,14 @@ $().ready(function () {
       "https://api.everytime.kr/find/timetable/table?id=" + tableId;
     let request = new XMLHttpRequest();
     request.open("GET", requestURL);
-    request.responseType = "text";
+    request.responseType = "document";
     request.withCredentials = true;
+    let response, table;
     request.onload = () => {
-      let response = request.response;
-      console.log(response);
+      response = request.response;
+      table = response.querySelector("table");
     };
     request.send();
+    return table;
   }
 });
