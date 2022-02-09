@@ -71,11 +71,10 @@ $().ready(function () {
       "https://api.everytime.kr/find/timetable/table?id=" + tableId;
     let request = new XMLHttpRequest();
     request.open("GET", requestURL);
-    request.responseType = "document";
     request.withCredentials = true;
     let response, table;
     request.onload = () => {
-      response = request.response;
+      response = request.responseXML;
       table = response.querySelector("table");
     };
     request.send();
