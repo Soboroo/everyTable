@@ -1,0 +1,56 @@
+<!--https://api.everytime.kr/find/timetable/subject/semester/list-->
+<response>
+<script/>
+<semester year="2022" semester="겨울" start_date="2022-12-21" end_date="2023-01-10" is_formal="0" is_supported="0"/>
+<semester year="2022" semester="2" start_date="2022-08-29" end_date="2022-12-16" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="0"/>
+<semester year="2022" semester="여름" start_date="2022-06-22" end_date="2022-07-12" is_formal="0" is_supported="0"/>
+<semester year="2022" semester="1" start_date="2022-03-02" end_date="2022-06-13" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2022-02-09 13:11:57"/>
+<semester year="2021" semester="겨울" start_date="2021-12-22" end_date="2022-01-11" is_formal="0" is_supported="0"/>
+<semester year="2021" semester="2" start_date="2021-08-30" end_date="2021-12-17" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2021-09-27 13:10:06"/>
+<semester year="2021" semester="여름" start_date="2021-06-23" end_date="2021-07-13" is_formal="0" is_supported="0"/>
+<semester year="2021" semester="1" start_date="2021-03-02" end_date="2021-06-20" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2021-03-29 21:08:03"/>
+<semester year="2020" semester="겨울" start_date="2020-12-26" end_date="2021-01-20" is_formal="0" is_supported="0"/>
+<semester year="2020" semester="2" start_date="2020-09-01" end_date="2020-12-25" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2020-09-22 13:12:44"/>
+<semester year="2020" semester="여름" start_date="2020-07-09" end_date="2020-07-29" is_formal="0" is_supported="0"/>
+<semester year="2020" semester="1" start_date="2020-03-23" end_date="2020-07-03" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2020-06-10 16:26:52"/>
+<semester year="2019" semester="겨울" start_date="2019-12-26" end_date="2020-01-16" is_formal="0" is_supported="0"/>
+<semester year="2019" semester="2" start_date="2019-09-02" end_date="2019-12-16" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2019-10-01 15:11:12"/>
+<semester year="2019" semester="여름" start_date="2019-06-27" end_date="2019-07-20" is_formal="0" is_supported="0"/>
+<semester year="2019" semester="1" start_date="2019-03-04" end_date="2019-06-17" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2019-01-18 10:20:25"/>
+<semester year="2018" semester="겨울" start_date="2018-12-26" end_date="2019-01-16" is_formal="0" is_supported="0"/>
+<semester year="2018" semester="2" start_date="2018-09-01" end_date="2018-12-25" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2018-11-06 19:55:16"/>
+<semester year="2018" semester="여름" start_date="2018-06-26" end_date="2018-07-20" is_formal="0" is_supported="0"/>
+<semester year="2018" semester="1" start_date="2018-03-05" end_date="2018-06-25" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2017-12-28 13:11:54"/>
+<semester year="2017" semester="겨울" start_date="2017-12-21" end_date="2018-01-12" is_formal="0" is_supported="0"/>
+<semester year="2017" semester="2" start_date="2017-08-28" end_date="2017-12-15" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2017-07-19 10:24:27"/>
+<semester year="2017" semester="여름" start_date="2017-06-21" end_date="2017-07-11" is_formal="0" is_supported="0"/>
+<semester year="2017" semester="1" start_date="2017-03-02" end_date="2017-06-16" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2017-02-17 14:37:15"/>
+<semester year="2016" semester="겨울" start_date="2016-12-19" end_date="2017-01-06" is_formal="0" is_supported="0"/>
+<semester year="2016" semester="2" start_date="2016-08-29" end_date="2016-12-18" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2016-08-11 11:20:01"/>
+<semester year="2016" semester="여름" start_date="2016-06-20" end_date="2016-07-08" is_formal="0" is_supported="0"/>
+<semester year="2016" semester="1" start_date="2016-02-29" end_date="2016-06-19" is_formal="1" is_supported="1" has_syllabus="0" has_subject_database="1" updated_at="2016-07-25 17:23:57"/>
+<semester year="2015" semester="겨울" start_date="2015-12-31" end_date="2016-01-20" is_formal="0" is_supported="0"/>
+<semester year="2015" semester="2" start_date="2015-09-01" end_date="2015-12-30" is_formal="1" is_supported="0"/>
+<semester year="2015" semester="여름" start_date="2015-07-01" end_date="2015-07-21" is_formal="0" is_supported="0"/>
+<semester year="2015" semester="1" start_date="2015-03-02" end_date="2015-06-30" is_formal="1" is_supported="0"/>
+<semester year="2014" semester="겨울" start_date="2014-12-31" end_date="2015-01-20" is_formal="0" is_supported="0"/>
+<semester year="2014" semester="2" start_date="2014-09-01" end_date="2014-12-30" is_formal="1" is_supported="0"/>
+<semester year="2014" semester="여름" start_date="2014-07-01" end_date="2014-07-21" is_formal="0" is_supported="0"/>
+<semester year="2014" semester="1" start_date="2014-03-02" end_date="2014-06-30" is_formal="1" is_supported="0"/>
+<semester year="2013" semester="겨울" start_date="2013-12-31" end_date="2014-01-20" is_formal="0" is_supported="0"/>
+<semester year="2013" semester="2" start_date="2013-09-01" end_date="2013-12-30" is_formal="1" is_supported="0"/>
+<semester year="2013" semester="여름" start_date="2013-07-01" end_date="2013-07-21" is_formal="0" is_supported="0"/>
+<semester year="2013" semester="1" start_date="2013-03-02" end_date="2013-06-30" is_formal="1" is_supported="0"/>
+<semester year="2012" semester="겨울" start_date="2012-12-31" end_date="2013-01-20" is_formal="0" is_supported="0"/>
+<semester year="2012" semester="2" start_date="2012-09-01" end_date="2012-12-30" is_formal="1" is_supported="0"/>
+<semester year="2012" semester="여름" start_date="2012-07-01" end_date="2012-07-21" is_formal="0" is_supported="0"/>
+<semester year="2012" semester="1" start_date="2012-03-02" end_date="2012-06-30" is_formal="1" is_supported="0"/>
+<semester year="2011" semester="겨울" start_date="2011-12-31" end_date="2012-01-20" is_formal="0" is_supported="0"/>
+<semester year="2011" semester="2" start_date="2011-09-01" end_date="2011-12-30" is_formal="1" is_supported="0"/>
+<semester year="2011" semester="여름" start_date="2011-07-01" end_date="2011-07-21" is_formal="0" is_supported="0"/>
+<semester year="2011" semester="1" start_date="2011-03-02" end_date="2011-06-30" is_formal="1" is_supported="0"/>
+<semester year="2010" semester="겨울" start_date="2010-12-31" end_date="2011-01-20" is_formal="0" is_supported="0"/>
+<semester year="2010" semester="2" start_date="2010-09-01" end_date="2010-12-30" is_formal="1" is_supported="0"/>
+<semester year="2010" semester="여름" start_date="2010-07-01" end_date="2010-07-21" is_formal="0" is_supported="0"/>
+<semester year="2010" semester="1" start_date="2010-03-02" end_date="2010-06-30" is_formal="1" is_supported="0"/>
+</response>
