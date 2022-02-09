@@ -62,7 +62,7 @@ $().ready(function () {
 
   function test() {
     // get id of selected table
-    tableId = document
+    const tableId = document
       .querySelector("#container > aside > div.menu > ol > li.active > a")
       .href.split("/")
       .reverse()[0];

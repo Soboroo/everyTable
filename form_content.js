@@ -1,19 +1,6 @@
 $().ready(function () {
-  const icalText =
-    "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//ical.marudot.com//iCal Event Maker\nCALSCALE:GREGORIAN\nBEGIN:VEVENT\nDTSTAMP:20220208T161610Z\nDTSTART:20220103T120000\nRRULE:FREQ=WEEKLY;BYDAY=TU;UNTIL=20220129T030000Z\nDTEND:20220103T133000\nSUMMARY:test\nEND:VEVENT\nEND:VCALENDAR";
-  var buf = new ArrayBuffer(icalText.length);
-  var bufView = new Uint8Array(buf);
-  for (var i = 0, strLen = icalText.length; i < strLen; i++) {
-    bufView[i] = icalText.charCodeAt(i);
-  }
-  var blob = new Blob([buf], { type: "text/calendar" });
-  var url = URL.createObjectURL(blob);
-  $("#tableCustom")
-    .children("p")
-    .append("<a href='" + url + "'>Download</a>");
-
   function getTableXML() {
-    tableId = document
+    const tableId = document
       .querySelector("#container > aside > div.menu > ol > li.active > a")
       .href.split("/")
       .reverse()[0];
@@ -31,6 +18,7 @@ $().ready(function () {
     request.send();
     return table;
   }
+
   function getSemesterInfo(year, semester) {
     const list = getSemesterListXML().querySelector("response").children;
     const ret = {};
@@ -39,8 +27,8 @@ $().ready(function () {
         list[i].getAttribute("year") == year &&
         list[i].getAttribute("semester") == semester
       ) {
-        ret.start_date = list[i].getAttribute("start_date");
-        ret.end_date = list[i].getAttribute("end_date");
+        ret.start_date = list[i].getAttribute("start_date").split("-").join("");
+        ret.end_date = list[i].getAttribute("end_date").split("-").join("");
         break;
       }
     }
@@ -61,13 +49,33 @@ $().ready(function () {
     return response;
   }
 
+  function createEvent(title, start, end, dayIndex, semesterInfo) {
+    const day = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+    var ret = "BEGIN:VEVENT\n";
+    ret += "SUMMARY:" + title + "\n";
+    ret += "DTSTART:" + semesterInfo.start_date + "T" + start + "00\n";
+    ret += "DTEND:" + semesterInfo.start_date + "T" + end + "00\n";
+    ret +=
+      "RRULE:FREQ=WEEKLY;BYDAY=" +
+      day[dayIndex] +
+      ";UNTIL=" +
+      semesterInfo.end_date +
+      "T235959\n";
+    ret += "UID:" + getUUID() + "\n";
+    ret += "END:VEVENT\n";
+    return ret;
+  }
   function createiCalURL(table) {
-    const icalText = "BEGIN:VCALENDAR\nVERSION:2.0\n";
+    const icalText =
+      "BEGIN:VCALENDAR\n" +
+      "VERSION:2.0\n" +
+      "PRODID:-//everyTable//everytime timetable maker//KO\n";
 
     var blob = new Blob([buf], { type: "text/calendar" });
     var url = URL.createObjectURL(blob);
     return url;
   }
+
   function stringToArrayBuffer(text) {
     var buf = new ArrayBuffer(text.length);
     var bufView = new Uint8Array(buf);
@@ -76,4 +84,17 @@ $().ready(function () {
     }
     return buf;
   }
+
+  function getUUID() {
+    // UUID v4 generator in JavaScript (RFC4122 compliant)
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        var r = (Math.random() * 16) | 0,
+          v = c == "x" ? r : (r & 3) | 8;
+        return v.toString(16);
+      }
+    );
+  }
+  // 출처: https://goni9071.tistory.com/209 [고니의꿈]
 });
