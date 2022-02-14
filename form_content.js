@@ -1,16 +1,18 @@
 $().ready(function () {
   const button = $("<a>Download</a>");
   button.click(function () {
-    var table;
-    getTableXML(function (xml) {
-      table = xml;
+    getTableXML.then(function (response) {
+      var table;
+      response.text().then(function (text) {
+        table = new DOMParser().parseFromString(text, "text/xml");
+      });
+      const url = createiCalURL(table);
+      console.log(url);
     });
-    const url = createiCalURL(table);
-    console.log(url);
   });
-  $("#tableCustom").children("p").append(button);
+  //$("#tableCustom").children("p").append(button);
 
-  function getTableXML(callback) {
+  function getTableXML() {
     const tableId = document
       .querySelector("#container > aside > div.menu > ol > li.active > a")
       .href.split("/")
@@ -18,18 +20,14 @@ $().ready(function () {
     console.log(tableId);
     let requestURL =
       "https://api.everytime.kr/find/timetable/table?id=" + tableId;
-    let request = new XMLHttpRequest();
-    request.open("GET", requestURL, false);
-    request.withCredentials = true;
-    let response, table;
-    request.onload = () => {
-      response = request.responseXML;
-      table = response.querySelector("table");
-      if (callback) {
-        callback(table);
-      }
-    };
-    request.send();
+
+    return fetch(requestURL, { credentials: "include" });
+  }
+
+  function getSemesterListXML() {
+    let requestURL =
+      "https://api.everytime.kr/find/timetable/subject/semester/list";
+    return fetch(requestURL, { credentials: "include" });
   }
 
   function getSemesterInfo(year, semester) {
@@ -125,22 +123,6 @@ $().ready(function () {
     return buf;
   }
 
-  function getSemesterListXML(callback) {
-    let requestURL =
-      "https://api.everytime.kr/find/timetable/subject/semester/list";
-    let request = new XMLHttpRequest();
-    request.open("GET", requestURL);
-    request.withCredentials = true;
-    let response;
-    request.onload = () => {
-      response = request.responseXML;
-      console.log(response);
-      if (callback) {
-        callback(response);
-      }
-    };
-    request.send();
-  }
   function timecodeToString(timecode) {
     const hour = (timecode / 12).toString();
     const minute = ((timecode % 12) * 5).toString();
@@ -166,17 +148,4 @@ $().ready(function () {
     );
   }
   // 출처: https://goni9071.tistory.com/209 [고니의꿈]
-
-  function ajax(url) {
-    return new Promise(function (resolve, reject) {
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(this.responseText);
-      };
-      xhr.onerror = reject;
-      xhr.open("GET", url);
-      xhr.withCredentials = true;
-      xhr.send();
-    });
-  }
 });
