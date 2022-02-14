@@ -126,8 +126,8 @@ $().ready(function () {
     }
     icalText += "END:VCALENDAR";
 
-    var blob = new Blob([stringToArrayBuffer(icalText)], {
-      type: "text/calendar",
+    var blob = new Blob([icalText], {
+      type: "text/calendar;charset=utf-8",
     });
     var url = URL.createObjectURL(blob);
     return url;
