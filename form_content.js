@@ -21,22 +21,38 @@ $().ready(function () {
     let requestURL =
       "https://api.everytime.kr/find/timetable/table?id=" + tableId;
 
-    return fetch(requestURL, { credentials: "include" });
+    return new Promise(function (resolve, reject) {
+      fetch(requestURL, { credentials: "include" })
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (text) {
+          resolve(
+            new DOMParser()
+              .parseFromString(text, "text/xml")
+              .querySelector("table")
+          );
+        });
+    });
   }
 
   function getSemesterListXML() {
     let requestURL =
       "https://api.everytime.kr/find/timetable/subject/semester/list";
-    return fetch(requestURL, { credentials: "include" });
+    return new Promise(function (resolve, reject) {
+      fetch(requestURL, { credentials: "include" })
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (text) {
+          resolve(new DOMParser().parseFromString(text, "text/xml"));
+        });
+    });
   }
 
-  function getSemesterInfo(year, semester) {
-    //const list = getSemesterListXML().querySelector("response").children;
-    var list;
-    getSemesterListXML(function (xml) {
-      console.log(xml);
-      list = xml.querySelector("response").children;
-    });
+  async function getSemesterInfo(year, semester) {
+    var list = await getSemesterListXML();
+    list = list.querySelector("response").children;
     const ret = {};
     for (var i = 0; i < list.length; i++) {
       if (
@@ -81,14 +97,17 @@ $().ready(function () {
     ret += "END:VEVENT\n";
     return ret;
   }
-  function createiCalURL(table) {
-    const icalText =
+  async function createiCalURL(table) {
+    var icalText =
       "BEGIN:VCALENDAR\n" +
       "VERSION:2.0\n" +
       "PRODID:-//everyTable//everytime timetable maker//KO\n";
     const year = table.getAttribute("year");
     const semester = table.getAttribute("semester");
-    const semesterInfo = getSemesterInfo(year, semester);
+    var semesterInfo;
+    await getSemesterInfo(year, semester).then(function (data) {
+      semesterInfo = data;
+    });
 
     const events = table.children;
     for (var i = 0; i < events.length; i++) {
@@ -124,8 +143,8 @@ $().ready(function () {
   }
 
   function timecodeToString(timecode) {
-    const hour = (timecode / 12).toString();
-    const minute = ((timecode % 12) * 5).toString();
+    var hour = (timecode / 12).toString();
+    var minute = ((timecode % 12) * 5).toString();
 
     if (hour.length == 1) {
       hour = "0" + hour;
