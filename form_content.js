@@ -1,16 +1,17 @@
 $().ready(function () {
   const button = $("<a>Download</a>");
-  button.click(function () {
-    getTableXML.then(function (response) {
-      var table;
-      response.text().then(function (text) {
-        table = new DOMParser().parseFromString(text, "text/xml");
-      });
-      const url = createiCalURL(table);
-      console.log(url);
+  button.click(async function () {
+    var table;
+    await getTableXML().then(function (data) {
+      table = data;
     });
+    var url;
+    await createiCalURL(table).then(function (data) {
+      url = data;
+    });
+    console.log(url);
   });
-  //$("#tableCustom").children("p").append(button);
+  $("#tableCustom").children("p").append(button);
 
   function getTableXML() {
     const tableId = document
