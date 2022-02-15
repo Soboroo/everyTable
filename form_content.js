@@ -1,15 +1,11 @@
 $().ready(function () {
   const button = $("<a>Download</a>");
   button.click(async function () {
-    var table;
-    await getTableXML().then(function (data) {
-      table = data;
+    await getTableXML().then(async function (table) {
+      await createiCalURL(table).then(function (url) {
+        console.log(url);
+      });
     });
-    var url;
-    await createiCalURL(table).then(function (data) {
-      url = data;
-    });
-    console.log(url);
   });
   $("#tableCustom").children("p").append(button);
 

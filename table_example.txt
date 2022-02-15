@@ -1,1 +1,0 @@
-https://api.everytime.kr/find/timetable/table?id=27929795
