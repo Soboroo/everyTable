@@ -7,4 +7,4 @@
 
 ## UI Sample
 
-![image](UIsample.jpg)
+![image](UISample.jpg)
