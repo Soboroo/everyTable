@@ -130,31 +130,32 @@ $().ready(function () {
     description = null
   ) {
     const day = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
-    var ret = "BEGIN:VEVENT\n";
-    ret += "SUMMARY:" + title + "\n";
-    ret += "DTSTART:" + semesterInfo.start_date + "T" + start + "00\n";
-    ret += "DTEND:" + semesterInfo.start_date + "T" + end + "00\n";
+    var ret = "BEGIN:VEVENT\r\n";
+    ret += "SUMMARY:" + title + "\r\n";
+    ret += "DTSTART:" + semesterInfo.start_date + "T" + start + "00\r\n";
+    ret += "DTEND:" + semesterInfo.start_date + "T" + end + "00\r\n";
     ret +=
       "RRULE:FREQ=WEEKLY;BYDAY=" +
       day[dayIndex] +
       ";UNTIL=" +
       semesterInfo.end_date +
-      "T235959\n";
-    ret += "UID:" + getUUID() + "\n";
+      "T235959\r\n";
+    ret += "UID:" + getUUID() + "\r\n";
     if (location !== null) {
-      ret += "LOCATION:" + location + "\n";
+      ret += "LOCATION:" + location + "\r\n";
     }
     if (description !== null) {
-      ret += "DESCRIPTION:" + description + "\n";
+      ret += "DESCRIPTION:" + description + "\r\n";
     }
-    ret += "END:VEVENT\n";
+    ret += "DTSTAMP:" + getCurrentTime() + "\r\n";
+    ret += "END:VEVENT\r\n";
     return ret;
   }
   async function createiCalURL(table) {
     var icalText =
-      "BEGIN:VCALENDAR\n" +
-      "VERSION:2.0\n" +
-      "PRODID:-//everyTable//everytime timetable maker//KO\n";
+      "BEGIN:VCALENDAR\r\n" +
+      "VERSION:2.0\r\n" +
+      "PRODID:-//everyTable//everytime timetable maker//KO\r\n";
     const year = table.getAttribute("year");
     const semester = table.getAttribute("semester");
     var semesterInfo;
@@ -196,7 +197,7 @@ $().ready(function () {
   }
 
   function timecodeToString(timecode) {
-    var hour = (timecode / 12).toString();
+    var hour = Math.floor(timecode / 12).toString();
     var minute = ((timecode % 12) * 5).toString();
 
     if (hour.length == 1) {
@@ -220,4 +221,17 @@ $().ready(function () {
     );
   }
   // 출처: https://goni9071.tistory.com/209 [고니의꿈]
+
+  function getCurrentTime() {
+    var today = new Date();
+
+    var year = today.getFullYear();
+    var month = ("0" + (today.getMonth() + 1)).slice(-2);
+    var day = ("0" + today.getDate()).slice(-2);
+    var hours = ("0" + today.getHours()).slice(-2);
+    var minutes = ("0" + today.getMinutes()).slice(-2);
+    var seconds = ("0" + today.getSeconds()).slice(-2);
+
+    return year + month + day + "T" + hours + minutes + seconds;
+  }
 });
