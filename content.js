@@ -59,25 +59,4 @@ $().ready(function () {
 
     return $form;
   }
-
-  function test() {
-    // get id of selected table
-    const tableId = document
-      .querySelector("#container > aside > div.menu > ol > li.active > a")
-      .href.split("/")
-      .reverse()[0];
-    console.log(tableId);
-    let requestURL =
-      "https://api.everytime.kr/find/timetable/table?id=" + tableId;
-    let request = new XMLHttpRequest();
-    request.open("GET", requestURL);
-    request.withCredentials = true;
-    let response, table;
-    request.onload = () => {
-      response = request.responseXML;
-      table = response.querySelector("table");
-    };
-    request.send();
-    return table;
-  }
 });

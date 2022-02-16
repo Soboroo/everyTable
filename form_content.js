@@ -1,13 +1,69 @@
 $().ready(function () {
-  const button = $("<a>Download</a>");
+  const button = $('<a href="javascript:;">Download</a>');
   button.click(async function () {
     await getTableXML().then(async function (table) {
+      const year = table.getAttribute("year");
+      const semester = table.getAttribute("semester");
+      const name = table.getAttribute("name");
       await createiCalURL(table).then(function (url) {
         console.log(url);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = year + "년 " + semester + "학기_" + name + ".ics";
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
       });
     });
   });
   $("#tableCustom").children("p").append(button);
+
+  $("#tableCustom > h3").after("<div class='ical1'>");
+
+  $("#tableCustom > div.ical1").append('<div id="icalTitle">');
+  const title = $("#icalTitle");
+  title.append("<label>제목</label>");
+  title.append(
+    '<input type="text" name="title" value maxlength="40" class="text">'
+  );
+  title.append('<ul class="format">');
+  for (const x of [
+    "과목명",
+    "교수명",
+    "강의실",
+    "전공/교양",
+    "학점",
+    "과목코드",
+  ]) {
+    $("#icalTitle > ul.format").append("<a>" + x + "</a>");
+  }
+
+  $("#tableCustom > div.ical1").append('<div id="icalDescription">');
+  const desc = $("#icalDescription");
+  desc.append("<label>설명</label>");
+  desc.append(
+    '<input type="text" name="title" value maxlength="40" class="text">'
+  );
+  desc.append('<ul class="format">');
+  for (const x of ["Sample1", "Sample2", "Sample3"]) {
+    $("#icalDescription > ul.format").append("<a>" + x + "</a>");
+  }
+
+  $("#tableCustom > div.ical1").append('<div id="icalPlace">');
+  const place = $("#icalPlace");
+  place.append("<label>장소</label>");
+  place.append('<input type="checkbox" checked="checked"></input>');
+  place.append('<label class="checkbox">장소란에 강의실 삽입</label>');
+
+  $("#tableCustom > div.ical1").append('<div id="icalTime">');
+  const time = $("#icalTime");
+  time.append("<label>시간</label>");
+  time.append("<a>시작일 </a>");
+  time.append(
+    '<input type="date" name="start" value="2018-01-01" class="date"><br>'
+  );
+  time.append("<a>종료일 </a>");
+  time.append('<input type="date" name="end" value="2018-01-01" class="date">');
 
   function getTableXML() {
     const tableId = document
