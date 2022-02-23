@@ -187,15 +187,6 @@ $().ready(function () {
     return url;
   }
 
-  function stringToArrayBuffer(text) {
-    var buf = new ArrayBuffer(text.length);
-    var bufView = new Uint8Array(buf);
-    for (var i = 0, strLen = text.length; i < strLen; i++) {
-      bufView[i] = text.charCodeAt(i);
-    }
-    return buf;
-  }
-
   function timecodeToString(timecode) {
     var hour = Math.floor(timecode / 12).toString();
     var minute = ((timecode % 12) * 5).toString();
@@ -234,4 +225,64 @@ $().ready(function () {
 
     return year + month + day + "T" + hours + minutes + seconds;
   }
+
+  /*
+  class Table {
+    constructor (tableId = document
+          .querySelector("#container > aside > div.menu > ol > li.active > a")
+          .href.split("/")
+          .reverse()[0]) {
+        return (async () => {
+        let requestURL =
+          "https://api.everytime.kr/find/timetable/table?id=" + tableId;
+
+        let response = await fetch(requestURL, { credentials: "include" });
+        let rawText = await response.text();
+        
+        const tableXml = new DOMParser().parseFromString(rawText, "text/xml").querySelector("table");
+        this.name = tableXml.getAttribute("name");
+        this.year = tableXml.getAttribute("year");
+        this.semester = tableXml.getAttribute("semester");
+
+        requestURL =
+          "https://api.everytime.kr/find/timetable/subject/semester/list";
+
+        response = await fetch(requestURL, { credentials: "include" });
+        rawText = await response.text();
+
+        const semesterXml = new DOMParser().parseFromString(rawText, "text/xml");
+
+        const list = semesterXml.querySelector("response").children;
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].getAttribute("year") == this.year && list[i].getAttribute("semester") == this.semester) {
+            this.startDate = new Date(list[i].getAttribute("start_date"));
+            this.endDate = new Date(list[i].getAttribute("end_date"));
+            break;
+          }
+        }
+
+        this.items = [];
+        const events = tableXml.children;
+        for (let event of events) {
+            for (let time of event.querySelector("time").children) {
+                this.items.push({
+                    title: event.querySelector("name").getAttribute("value"),
+                    credit: event.querySelector("credit").getAttribute("value"),
+                    day: time.getAttribute("day"),
+                    start: time.getAttribute("starttime"),
+                    end:  time.getAttribute("endtime"),
+                    location: time.getAttribute("place"),
+                });
+            }
+        }
+            
+        return this;
+        })();
+    }
+
+    test() {
+        console.log(this.xml);
+    }
+};
+  */
 });
