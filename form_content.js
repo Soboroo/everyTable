@@ -1,20 +1,14 @@
 $().ready(function () {
   const button = $('<a href="javascript:;">Download</a>');
   button.click(async function () {
-    await getTableXML().then(async function (table) {
-      const year = table.getAttribute("year");
-      const semester = table.getAttribute("semester");
-      const name = table.getAttribute("name");
-      await createiCalURL(table).then(function (url) {
-        console.log(url);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = year + "년 " + semester + "학기_" + name + ".ics";
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      });
-    });
+    const table = await new Table();
+    const url = table.createIcalURL();
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = table.year + "년 " + table.semester + "학기_" + table.name + ".ics";
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
   });
   $("#tableCustom").children("p").append(button);
 
@@ -65,167 +59,6 @@ $().ready(function () {
   time.append("<a>종료일 </a>");
   time.append('<input type="date" name="end" value="2018-01-01" class="date">');
 
-  function getTableXML() {
-    const tableId = document
-      .querySelector("#container > aside > div.menu > ol > li.active > a")
-      .href.split("/")
-      .reverse()[0];
-    console.log(tableId);
-    let requestURL =
-      "https://api.everytime.kr/find/timetable/table?id=" + tableId;
-
-    return new Promise(function (resolve, reject) {
-      fetch(requestURL, { credentials: "include" })
-        .then(function (response) {
-          return response.text();
-        })
-        .then(function (text) {
-          resolve(
-            new DOMParser()
-              .parseFromString(text, "text/xml")
-              .querySelector("table")
-          );
-        });
-    });
-  }
-
-  function getSemesterListXML() {
-    let requestURL =
-      "https://api.everytime.kr/find/timetable/subject/semester/list";
-    return new Promise(function (resolve, reject) {
-      fetch(requestURL, { credentials: "include" })
-        .then(function (response) {
-          return response.text();
-        })
-        .then(function (text) {
-          resolve(new DOMParser().parseFromString(text, "text/xml"));
-        });
-    });
-  }
-
-  async function getSemesterInfo(year, semester) {
-    var list = await getSemesterListXML();
-    list = list.querySelector("response").children;
-    const ret = {};
-    for (var i = 0; i < list.length; i++) {
-      if (
-        list[i].getAttribute("year") == year &&
-        list[i].getAttribute("semester") == semester
-      ) {
-        ret.start_date = list[i].getAttribute("start_date").split("-").join("");
-        ret.end_date = list[i].getAttribute("end_date").split("-").join("");
-        break;
-      }
-    }
-    return ret;
-  }
-
-  function createEvent(
-    title,
-    start,
-    end,
-    dayIndex,
-    semesterInfo,
-    location = null,
-    description = null
-  ) {
-    const day = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
-    var ret = "BEGIN:VEVENT\r\n";
-    ret += "SUMMARY:" + title + "\r\n";
-    ret += "DTSTART:" + semesterInfo.start_date + "T" + start + "00\r\n";
-    ret += "DTEND:" + semesterInfo.start_date + "T" + end + "00\r\n";
-    ret +=
-      "RRULE:FREQ=WEEKLY;BYDAY=" +
-      day[dayIndex] +
-      ";UNTIL=" +
-      semesterInfo.end_date +
-      "T235959\r\n";
-    ret += "UID:" + getUUID() + "\r\n";
-    if (location !== null) {
-      ret += "LOCATION:" + location + "\r\n";
-    }
-    if (description !== null) {
-      ret += "DESCRIPTION:" + description + "\r\n";
-    }
-    ret += "DTSTAMP:" + getCurrentTime() + "\r\n";
-    ret += "END:VEVENT\r\n";
-    return ret;
-  }
-  async function createiCalURL(table) {
-    var icalText =
-      "BEGIN:VCALENDAR\r\n" +
-      "VERSION:2.0\r\n" +
-      "PRODID:-//everyTable//everytime timetable maker//KO\r\n";
-    const year = table.getAttribute("year");
-    const semester = table.getAttribute("semester");
-    var semesterInfo;
-    await getSemesterInfo(year, semester).then(function (data) {
-      semesterInfo = data;
-    });
-
-    const events = table.children;
-    for (var i = 0; i < events.length; i++) {
-      const event = events[i];
-      const title = event.querySelector("name").getAttribute("value");
-      const times = event.querySelector("time").children;
-      for (var j = 0; j < times.length; j++) {
-        const time = times[j];
-        const day = time.getAttribute("day");
-        const start = timecodeToString(time.getAttribute("starttime"));
-        const end = timecodeToString(time.getAttribute("endtime"));
-        const location = time.getAttribute("place");
-
-        icalText += createEvent(title, start, end, day, semesterInfo, location);
-      }
-    }
-    icalText += "END:VCALENDAR";
-
-    var blob = new Blob([icalText], {
-      type: "text/calendar;charset=utf-8",
-    });
-    var url = URL.createObjectURL(blob);
-    return url;
-  }
-
-  function timecodeToString(timecode) {
-    var hour = Math.floor(timecode / 12).toString();
-    var minute = ((timecode % 12) * 5).toString();
-
-    if (hour.length == 1) {
-      hour = "0" + hour;
-    }
-    if (minute.length == 1) {
-      minute = "0" + minute;
-    }
-    return hour + minute;
-  }
-
-  function getUUID() {
-    // UUID v4 generator in JavaScript (RFC4122 compliant)
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-      /[xy]/g,
-      function (c) {
-        var r = (Math.random() * 16) | 0,
-          v = c == "x" ? r : (r & 3) | 8;
-        return v.toString(16);
-      }
-    );
-  }
-  // 출처: https://goni9071.tistory.com/209 [고니의꿈]
-
-  function getCurrentTime() {
-    var today = new Date();
-
-    var year = today.getFullYear();
-    var month = ("0" + (today.getMonth() + 1)).slice(-2);
-    var day = ("0" + today.getDate()).slice(-2);
-    var hours = ("0" + today.getHours()).slice(-2);
-    var minutes = ("0" + today.getMinutes()).slice(-2);
-    var seconds = ("0" + today.getSeconds()).slice(-2);
-
-    return year + month + day + "T" + hours + minutes + seconds;
-  }
-
   class Table {
     constructor(tableId = document
       .querySelector("#container > aside > div.menu > ol > li.active > a")
@@ -253,8 +86,8 @@ $().ready(function () {
 
         for (let date of semesterXml.querySelector("response").children) {
           if (date.getAttribute("year") == this.year && date.getAttribute("semester") == this.semester) {
-            this.startDate = new Date(date.getAttribute("start_date"));
-            this.endDate = new Date(date.getAttribute("end_date"));
+            this.startDate = new Date(date.getAttribute("start_date") + " 00:00:00");
+            this.endDate = new Date(date.getAttribute("end_date") + " 00:00:00");
             break;
           }
         }
@@ -276,6 +109,81 @@ $().ready(function () {
 
         return this;
       })();
+    }
+
+    createIcalURL() {
+      let icalText =
+        "BEGIN:VCALENDAR\r\n" +
+        "VERSION:2.0\r\n" +
+        "PRODID:-//everyTable//everytime timetable maker//KO\r\n";
+
+      const day = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+      let until = new Date(this.endDate);
+      until.setDate(until.getDate() + 1);
+      const untilString = this.getDateString(until, 0, 3);
+      for (let item of this.items) {
+        let start = new Date(this.startDate);
+        start.setDate(start.getDate() + ((item.day - start.getDay() + 8) % 7));
+        const startString = this.getDateString(start, 0, 3);
+
+        let event = "BEGIN:VEVENT\r\n";
+        event += "SUMMARY:" + item.title + "\r\n";
+        event += "DTSTART:" + startString + "T" + this.timecodeToString(item.start) + "\r\n";
+        event += "DTEND:" + startString + "T" + this.timecodeToString(item.end) + "\r\n";
+        event += "RRULE:FREQ=WEEKLY;BYDAY=" + day[item.day] + ";UNTIL=" + untilString + "T000000\r\n";
+        event += "LOCATION:" + item.location + "\r\n";
+        event += "UID:" + this.getUUID() + "\r\n";
+        event += "DTSTAMP:" + this.getDateString(new Date(), 0, 3) + "T" + this.getDateString(new Date(), 3, 6) + "\r\n";
+        event += "END:VEVENT\r\n";
+
+        icalText += event;
+      }
+      icalText += "END:VCALENDAR";
+      console.log(icalText);
+      var blob = new Blob([icalText], {
+        type: "text/calendar;charset=utf-8",
+      });
+      var url = URL.createObjectURL(blob);
+      return url;
+    }
+
+    timecodeToString(timecode) {
+      let hour = Math.floor(timecode / 12).toString();
+      let minute = ((timecode % 12) * 5).toString();
+
+      if (hour.length == 1) {
+        hour = "0" + hour;
+      }
+      if (minute.length == 1) {
+        minute = "0" + minute;
+      }
+      return hour + minute + "00";
+    }
+
+    getUUID() {
+      // UUID v4 generator in JavaScript (RFC4122 compliant)
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function (c) {
+          var r = (Math.random() * 16) | 0,
+            v = c == "x" ? r : (r & 3) | 8;
+          return v.toString(16);
+        }
+      );
+    }
+    // 출처: https://goni9071.tistory.com/209 [고니의꿈]
+
+    getDateString(time, start, end) {
+      let format = [];
+
+      format.push(time.getFullYear());
+      format.push(("0" + (time.getMonth() + 1)).slice(-2));
+      format.push(("0" + time.getDate()).slice(-2));
+      format.push(("0" + time.getHours()).slice(-2));
+      format.push(("0" + time.getMinutes()).slice(-2));
+      format.push(("0" + time.getSeconds()).slice(-2));
+
+      return format.slice(start, end).join("");
     }
 
     test() {
