@@ -14,7 +14,7 @@
     {
       "matches": ["https://everytime.kr/timetable*"],
       "css": ["everyTable.css"],
-      "js": ["jquery-3.6.0.min.js", "content.js", "form_content.js"],
+      "js": ["jquery-3.6.0.min.js", "timetableGenerator.js", "content.js"],
       "run_at": "document_idle"
     }
   ]
