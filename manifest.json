@@ -4,12 +4,6 @@
   "version": "0.0.1",
   "permissions": ["activeTab", "storage"],
   "manifest_version": 3,
-  "background": {
-    "service_worker": "background.js"
-  },
-  "action": {
-    "default_title": "Make this page red"
-  },
   "content_scripts": [
     {
       "matches": ["https://everytime.kr/timetable*"],
