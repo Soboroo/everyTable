@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "permissions": ["activeTab", "storage"],
   "manifest_version": 3,
+  "web_accessible_resources": [{ "resources": ["icalUI.html"], "matches": ["https://everytime.kr/*"] }],
   "content_scripts": [
     {
       "matches": ["https://everytime.kr/timetable*"],
