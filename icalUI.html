@@ -5,34 +5,36 @@
     <div>
       <label>제목</label>
       <input type="text" id="icalTitle" value maxlength="40" class="text">
-      <ul style="display: flex;flex-wrap: wrap;">
-        <a id="titleFormat">과목명</a>
-        <a id="professorFormat">교수</a>
-        <a id="typeFormat">전공/교양</a>
-        <a id="creditFormat">학점</a>
-        <a id="locationFormat">강의실</a>
-        <a id="internalFormat">과목코드</a>
+      <ul id="subjectFormatters" style="display: flex;flex-wrap: wrap;">
+        <a id="subjectTitleFormat">과목명</a>
+        <a id="subjectProfessorFormat">교수</a>
+        <a id="subjectTypeFormat">전공/교양</a>
+        <a id="subjectCreditFormat">학점</a>
+        <a id="subjectLocationFormat">강의실</a>
+        <a id="subjectInternalFormat">과목코드</a>
       </ul>
     </div>
     <div>
       <label>설명</label>
-      <input type="text" name="title" value maxlength="40" class="text">
-      <ul style="display: flex;flex-wrap: wrap;">
-        <a>Sample1</a>
-        <a>Sample2</a>
-        <a>Sample3</a>
-      </ul>
+      <input type="text" id="icalDescription" value maxlength="40" class="text">
+      <ul id="descriptionFormatters" style="display: flex;flex-wrap: wrap;">
+        <a id="descriptionTitleFormat">과목명</a>
+        <a id="descriptionProfessorFormat">교수</a>
+        <a id="descriptionTypeFormat">전공/교양</a>
+        <a id="descriptionCreditFormat">학점</a>
+        <a id="descriptionLocationFormat">강의실</a>
+        <a id="descriptionInternalFormat">과목코드</a>
+      </ul </div>
+      <div>
+        <label>장소</label>
+        <input type="checkbox" checked="checked"></input>
+        <label class="checkbox">장소란에 강의실 삽입</label>
+      </div>
+      <div>
+        <label>시간</label>
+        <input type="date" name="start" value="2018-01-01" class="date">
+        <input type="date" name="end" value="2018-01-01" class="date">
+      </div>
     </div>
-    <div>
-      <label>장소</label>
-      <input type="checkbox" checked="checked"></input>
-      <label class="checkbox">장소란에 강의실 삽입</label>
-    </div>
-    <div>
-      <label>시간</label>
-      <input type="date" name="start" value="2018-01-01" class="date">
-      <input type="date" name="end" value="2018-01-01" class="date">
-    </div>
-  </div>
-  <input type="button" value="Export" class="button">
+    <input type="button" value="Export" class="button">
 </form>
