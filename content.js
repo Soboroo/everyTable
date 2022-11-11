@@ -1,27 +1,35 @@
 $().ready(function () {
+  iCalUiAttach();
+
+  createButton("iCal", "tableCustom", "light image export").appendTo(
+    "#container > aside > div.title > ol"
+  );
+  $('[data-modal="tableCustom"]').on("click", async () => {
+    openIcalUi();
+  });
+});
+
+function openIcalUi() {
+  // const table = await new Table();
+  // const ical = new Ical(table);
+  // downloadIcal(ical);
+  var $modalwrap = $("<div></div>").addClass("modalwrap");
+  $modalwrap.on("click", function () {
+    $("div.modalwrap").remove();
+    $("#tableCustom").hide();
+  });
+  $modalwrap.insertBefore($("#tableCustom"));
+  $("#tableCustom").show();
+}
+
+function iCalUiAttach() {
   $.get(chrome.runtime.getURL('/icalUI.html'), function (data) {
     htmlInject(data);
     formatterInit($("#subjectFormatters"), $("#icalTitle"));
     formatterInit($("#descriptionFormatters"), $("#icalDescription"));
     moveElementToCenter($("#tableCustom"));
   });
-
-  createButton("iCal", "tableCustom", "light image export").appendTo(
-    "#container > aside > div.title > ol"
-  );
-  $('[data-modal="tableCustom"]').on("click", async () => {
-    // const table = await new Table();
-    // const ical = new Ical(table);
-    // downloadIcal(ical);
-    var $modalwrap = $("<div></div>").addClass("modalwrap");
-    $modalwrap.on("click", function () {
-      $("div.modalwrap").remove();
-      $("#tableCustom").hide();
-    });
-    $modalwrap.insertBefore($("#tableCustom"));
-    $("#tableCustom").show();
-  });
-});
+}
 
 function moveElementToCenter($element) {
   $element.css({
