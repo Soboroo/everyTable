@@ -5,6 +5,7 @@
 - iCal 파일 생성 (구현 완료)
 - Google Calendar 연동 (구현 예정)
 
-## UI Sample
-
-![image](UISample.jpg)
+## 적용방법
+1. https://github.com/Soboroo/everytable_chrome/archive/refs/heads/master.zip 다운로드 및 압축해제
+2. chrome://extensions/ 에서 개발자 모드 활성화 후, '압축해제된 확장 프로그램을 로드합니다.' 선택
+3. 압축해제한 폴더 선택
