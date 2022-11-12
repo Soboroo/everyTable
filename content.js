@@ -1,12 +1,9 @@
+const iCalButtonLocation = "#container > aside > div.title > ol";
+
 $().ready(function () {
   iCalUiAttach();
-
-  createButton("iCal", "tableCustom", "light image export").appendTo(
-    "#container > aside > div.title > ol"
-  );
-  $('[data-modal="tableCustom"]').on("click", async () => {
-    openIcalUi();
-  });
+  createButton("iCal", "tableCustom", "light image export").appendTo(iCalButtonLocation);
+  $('[data-modal="tableCustom"]').on("click", () => {openIcalUi();});
 });
 
 function openIcalUi() {
