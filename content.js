@@ -3,20 +3,13 @@ const iCalButtonLocation = "#container > aside > div.title > ol";
 $().ready(function () {
   iCalUiAttach();
   createButton("iCal", "tableCustom", "light image export").appendTo(iCalButtonLocation);
-  $('[data-modal="tableCustom"]').on("click", () => {openIcalUi();});
+  $('[data-modal="tableCustom"]').on("click", async () => {openIcalUi();});
 });
 
-function openIcalUi() {
-  // const table = await new Table();
-  // const ical = new Ical(table);
-  // downloadIcal(ical);
-  var $modalwrap = $("<div></div>").addClass("modalwrap");
-  $modalwrap.on("click", function () {
-    $("div.modalwrap").remove();
-    $("#tableCustom").hide();
-  });
-  $modalwrap.insertBefore($("#tableCustom"));
-  $("#tableCustom").show();
+async function openIcalUi() {
+  const table = await new Table();
+  const ical = new Ical(table);
+  downloadIcal(ical);
 }
 
 function iCalUiAttach() {
