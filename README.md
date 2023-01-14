@@ -1,9 +1,6 @@
 # everyTable
 
-에브리타임 시간표를 외부에서 사용할 수 있도록 도와주는 프로그램입니다.
-
-- iCal 파일 생성 (구현 완료)
-- Google Calendar 연동 (구현 예정)
+에브리타임 시간표를 외부에서 사용할 수 있도록 ics파일을 제작해주는 크롬 확장프로그램입니다.
 
 ## 적용방법
 1. https://github.com/Soboroo/everytable_chrome/archive/refs/heads/master.zip 다운로드 및 압축해제
