@@ -8,4 +8,4 @@
 3. 압축해제한 폴더 선택
 
 ## 사용방법
-에브리타임 시간표(https://everytime.kr/timetable) 에서 'iCal' 클릭 후 다운로드
+[에브리타임 시간표](https://everytime.kr/timetable) 에서 'iCal' 클릭 후 다운로드
